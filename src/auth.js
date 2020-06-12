@@ -1,22 +1,56 @@
+import fetch from 'node-fetch'
+
 import S3Client from './utils/Aws'
-import oauth2, { config } from './utils/oauth'
+import oauth2, { config, siteUrl } from './utils/oauth'
 
 const s3 = new S3Client()
 
-export const auth = async () => {
-  const authorizationURI = oauth2.authorizationCode.authorizeURL({
-    redirect_uri: config.redirect_uri,
-    scope: 'read,activity:read',
-    state: '',
-  })
+export const auth = async (event) => {
+  if (event.httpMethod === 'POST') {
+    try {
+      await fetch(`https://${process.env.TM_SLACK_HOOK}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          blocks: [
+            {
+              type: 'section',
+              text: {
+                type: 'mrkdwn',
+                text: `<${siteUrl}/.netlify/functions/stravabot-auth|Authenticate> with the TotallyRunning Strava slack bot.`,
+              },
+            },
+          ],
+        }),
+      })
+      return {
+        statusCode: 200,
+        body: 'success',
+      }
+    } catch (err) {
+      console.error('auth error', err)
+      return {
+        statusCode: 500,
+        body: err.message,
+      }
+    }
+  } else {
+    const authorizationURI = oauth2.authorizationCode.authorizeURL({
+      redirect_uri: config.redirect_uri,
+      scope: 'read,activity:read',
+      state: '',
+    })
 
-  return {
-    statusCode: 302,
-    headers: {
-      Location: authorizationURI,
-      'Cache-Control': 'no-cache',
-    },
-    body: '',
+    return {
+      statusCode: 302,
+      headers: {
+        Location: authorizationURI,
+        'Cache-Control': 'no-cache',
+      },
+      body: '',
+    }
   }
 }
 
