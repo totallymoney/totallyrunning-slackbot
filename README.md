@@ -16,9 +16,10 @@ This was a product of TotallyMoney's Big Hack 2020, held on 11/06/20.
 
 ### Features
 
+- Use a CloudWatch trigger to automatically post the leaderboard at a specific time each week
 - Compare data to previous time periods (e.g week-by-week)
 - Get different time periods, using the slash command e.g `/totallyrunning-leaderboard 30` to get the last 30 days
 - Live streamed updates from Strava when someone sets a personal best
 - Other activity types
 - Use Slack usernames in the leaderboard
-- Make authenticate message (`/totallyrunning-auth`) only visible to the user who requested it
+- Make authenticate message (`/totallyrunning-auth`) only visible to the user who requested it get
