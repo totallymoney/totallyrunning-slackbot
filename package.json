@@ -17,5 +17,12 @@
     "serverless-dotenv-plugin": "^2.1.1",
     "serverless-offline": "^5.3.3"
   },
-  "dependencies": {}
+  "dependencies": {
+    "aws-sdk": "^2.695.0",
+    "date-fns": "^2.14.0",
+    "dotenv": "^8.2.0",
+    "node-fetch": "^2.6.0",
+    "qs": "^6.9.4",
+    "simple-oauth2": "3.4.0"
+  }
 }
