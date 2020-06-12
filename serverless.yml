@@ -18,19 +18,19 @@ provider:
 
 functions:
   slack:
-    handler: handler.slack
+    handler: src/index.slack
     events:
       - http:
           path: slack
           method: post
   auth:
-    handler: handler.auth
+    handler: src/index.auth
     events:
       - http:
           path: auth
           method: get
   authCallback:
-    handler: handler.authCallback
+    handler: src/index.authCallback
     events:
       - http:
           path: authCallback

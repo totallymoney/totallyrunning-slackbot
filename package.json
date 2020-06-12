@@ -1,16 +1,17 @@
 {
   "name": "totallyrunning-slackbot",
   "version": "1.1.0",
-  "description": "A Node.js starter for the Serverless Framework with async/await and unit test support",
+  "description": "A slackbot for the TotallyRunning Strava club, for TotallyMoney employees",
   "main": "handler.js",
   "scripts": {
-    "test": "serverless-bundle test"
+    "test": "serverless-bundle test",
+    "dev": "serverless offline start"
   },
   "author": "",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/AnomalyInnovations/serverless-nodejs-starter.git"
+    "url": "https://github.com/tomoakley/totallyrunning-slackbot"
   },
   "devDependencies": {
     "serverless-bundle": "^1.2.5",
@@ -22,6 +23,7 @@
     "date-fns": "^2.14.0",
     "node-fetch": "^2.6.0",
     "qs": "^6.9.4",
+    "serverless": "^1.72.0",
     "simple-oauth2": "3.4.0"
   }
 }
