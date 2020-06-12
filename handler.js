@@ -5,25 +5,9 @@ import subWeeks from "date-fns/subWeeks";
 import S3Client from "./utils/Aws";
 import oauth2, { config } from "./utils/oauth";
 
-/* export const hello = async (event, context) => {
-  return {
-    statusCode: 200,
-    body: JSON.stringify({
-      message: `Go Serverless v1.0! ${(await message({ time: 1, copy: 'Your function executed successfully!'}))}`,
-    }),
-  };
-};
-
-const message = ({ time, ...rest }) => new Promise((resolve, reject) =>
-  setTimeout(() => {
-    resolve(`${rest.copy} (with a delay)`);
-  }, time * 1000)
-); */
-
-require("dotenv").config();
+const s3 = new S3Client();
 
 export const slack = async (event, context) => {
-  const s3 = new S3Client();
   const objects = await s3.list({
     Bucket: process.env.TM_AWS_S3_BUCKET_PATH,
   });
@@ -146,7 +130,6 @@ export const auth = async (event, context) => {
 
 export const authCallback = async (event, context) => {
   const { code } = event.queryStringParameters;
-  const s3 = new S3Client();
 
   try {
     const {

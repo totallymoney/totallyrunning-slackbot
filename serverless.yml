@@ -22,7 +22,7 @@ functions:
     events:
       - http:
           path: slack
-          method: get
+          method: post
   auth:
     handler: handler.auth
     events:
