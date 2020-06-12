@@ -1,7 +1,5 @@
-# NOTE: update this with your service name
 service: totallyrunning-slackbot
 
-# Create an optimized package for our functions
 package:
   individually: true
 
@@ -17,20 +15,26 @@ provider:
   region: us-east-1
 
 functions:
-  slack:
-    handler: src/index.slack
+  leaderboard:
+    handler: src/leaderboard.leaderboard
     events:
       - http:
-          path: slack
+          path: leaderboard
+          method: post
+  authLink:
+    handler: src/auth.auth
+    events:
+      - http:
+          path: auth
           method: post
   auth:
-    handler: src/index.auth
+    handler: src/auth.auth
     events:
       - http:
           path: auth
           method: get
   authCallback:
-    handler: src/index.authCallback
+    handler: src/auth.authCallback
     events:
       - http:
           path: authCallback
