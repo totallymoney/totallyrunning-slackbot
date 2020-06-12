@@ -1,28 +1,26 @@
-import simpleOauth from "simple-oauth2";
+import simpleOauth from 'simple-oauth2'
 
-export const siteUrl = process.env.URL || "http://localhost:3000";
-
-require("dotenv").config();
+export const siteUrl = process.env.URL || 'http://localhost:3000'
 
 export const config = {
   clientId: process.env.STRAVA_CLIENT_ID,
   clientSecret: process.env.STRAVA_CLIENT_SECRET,
-  tokenHost: "https://strava.com",
-  authorizePath: `https://www.strava.com/oauth/authorize`,
-  tokenPath: `https://www.strava.com/oauth/token`,
+  tokenHost: 'https://strava.com',
+  authorizePath: 'https://www.strava.com/oauth/authorize',
+  tokenPath: 'https://www.strava.com/oauth/token',
   redirect_uri: `${siteUrl}/authCallback`,
-};
+}
 
 function authInstance(credentials) {
   if (!credentials.client.id) {
-    throw new Error("MISSING REQUIRED ENV VARS. Please set STRAVA_CLIENT_ID");
+    throw new Error('MISSING REQUIRED ENV VARS. Please set STRAVA_CLIENT_ID')
   }
   if (!credentials.client.secret) {
     throw new Error(
-      "MISSING REQUIRED ENV VARS. Please set STRAVA_CLIENT_SECRET"
-    );
+      'MISSING REQUIRED ENV VARS. Please set STRAVA_CLIENT_SECRET'
+    )
   }
-  return simpleOauth.create(credentials);
+  return simpleOauth.create(credentials)
 }
 
 export default authInstance({
@@ -35,4 +33,4 @@ export default authInstance({
     tokenPath: config.tokenPath,
     authorizePath: config.authorizePath,
   },
-});
+})
