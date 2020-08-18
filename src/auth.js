@@ -1,11 +1,12 @@
 import fetch from 'node-fetch'
 
 import S3Client from './utils/Aws'
-import oauth2, { config, siteUrl } from './utils/oauth'
+import oauth2, { config } from './utils/oauth'
 
 const s3 = new S3Client()
 
 export const auth = async (event) => {
+  console.log(event)
   if (event.httpMethod === 'POST') {
     try {
       await fetch(`https://${process.env.TM_SLACK_HOOK}`, {
@@ -19,7 +20,7 @@ export const auth = async (event) => {
               type: 'section',
               text: {
                 type: 'mrkdwn',
-                text: `<${siteUrl}/.netlify/functions/stravabot-auth|Authenticate> with the TotallyRunning Strava slack bot.`,
+                text: `<http://${event.headers.Host}/prod/auth|Authenticate> with the TotallyRunning Strava slack bot.`,
               },
             },
           ],
@@ -38,7 +39,7 @@ export const auth = async (event) => {
     }
   } else {
     const authorizationURI = oauth2.authorizationCode.authorizeURL({
-      redirect_uri: config.redirect_uri,
+      redirect_uri: config.redirect_uri(event.headers.Host),
       scope: 'read,activity:read',
       state: '',
     })
@@ -63,7 +64,7 @@ export const authCallback = async (event) => {
     } = oauth2.accessToken.create(
       await oauth2.authorizationCode.getToken({
         code: code,
-        redirect_uri: config.redirect_uri,
+        redirect_uri: config.redirect_uri(event.headers.Host),
         client_id: config.clientId,
         client_secret: config.clientSecret,
       })

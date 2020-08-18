@@ -83,7 +83,9 @@ export const leaderboard = async () => {
 
   const strings = distances.map(
     ({ name, totalDistance }, i) =>
-      `${i}/ ${name}: ${Number.parseFloat(totalDistance / 1000).toFixed(2)}km`
+      `${i + 1}/ ${name}: ${Number.parseFloat(totalDistance / 1000).toFixed(
+        2
+      )}km`
   )
 
   const body = JSON.stringify({

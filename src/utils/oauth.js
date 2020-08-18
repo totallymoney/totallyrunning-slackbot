@@ -1,14 +1,12 @@
 import simpleOauth from 'simple-oauth2'
 
-export const siteUrl = process.env.URL || 'http://localhost:3000'
-
 export const config = {
   clientId: process.env.STRAVA_CLIENT_ID,
   clientSecret: process.env.STRAVA_CLIENT_SECRET,
   tokenHost: 'https://strava.com',
   authorizePath: 'https://www.strava.com/oauth/authorize',
   tokenPath: 'https://www.strava.com/oauth/token',
-  redirect_uri: `${siteUrl}/authCallback`,
+  redirect_uri: (host) => `http://${host}/prod/authCallback`,
 }
 
 function authInstance(credentials) {
