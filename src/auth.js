@@ -6,10 +6,9 @@ import oauth2, { config } from './utils/oauth'
 const s3 = new S3Client()
 
 export const auth = async (event) => {
-  console.log(event)
   if (event.httpMethod === 'POST') {
     try {
-      await fetch(`https://${process.env.TM_SLACK_HOOK}`, {
+      await fetch(process.env.SLACK_WEBHOOK, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -20,7 +19,7 @@ export const auth = async (event) => {
               type: 'section',
               text: {
                 type: 'mrkdwn',
-                text: `<http://${event.headers.Host}/prod/auth|Authenticate> with the TotallyRunning Strava slack bot.`,
+                text: `<${process.env.AUTH_LINK}|Authenticate> with the TotallyRunning Strava slack bot.`,
               },
             },
           ],

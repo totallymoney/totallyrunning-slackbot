@@ -9291,6 +9291,11 @@ serverless-dotenv-plugin@^2.1.1:
     dotenv "^8.2.0"
     dotenv-expand "^5.1.0"
 
+serverless-offline-ssm@^5.0.2:
+  version "5.0.2"
+  resolved "https://registry.yarnpkg.com/serverless-offline-ssm/-/serverless-offline-ssm-5.0.2.tgz#fa2cd305bd775599e0098b28f400c211bc671b93"
+  integrity sha512-9DAeJXdMqqBr+UV/aRMYXcMsIU9wGKzM+X15IftkWNGnVqyZLVN3UF8Py3B7PQskw6hSfy79KYQglD43zhcmkA==
+
 serverless-offline@^5.3.3:
   version "5.12.1"
   resolved "https://registry.yarnpkg.com/serverless-offline/-/serverless-offline-5.12.1.tgz#1537d25c0da96866172e3a4aa3744930dc3c3c4d"

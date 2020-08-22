@@ -7,6 +7,7 @@ import S3Client from './utils/Aws'
 const s3 = new S3Client()
 
 export const leaderboard = async () => {
+  console.log('env', process.env)
   const objects = await s3.list({
     Bucket: process.env.TM_AWS_S3_BUCKET_PATH,
   })
@@ -94,7 +95,7 @@ export const leaderboard = async () => {
     )}`,
   })
   try {
-    await fetch(`https://${process.env.TM_SLACK_HOOK}`, {
+    await fetch(process.env.SLACK_WEBHOOK, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
