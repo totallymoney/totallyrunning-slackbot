@@ -10,7 +10,7 @@ plugins:
   - serverless-dotenv-plugin # Load .env as environment variables
 
 custom:
-  myStage: ${opt:stage, self:provider.stage}
+  myStage: ${opt:stage, 'dev'}
   serverless-offline-ssm:
     stages:
       - offline
@@ -19,27 +19,28 @@ custom:
       dev: ${ssm:/bighack-stravabot/dev/slack_webhook}
       prod: ${ssm:/bighack-stravabot/prod/slack_webhook}
     AUTH_LINK:
-      {
+      dev: http://localhost:3000/auth
+      prod: {
         'Fn::Join':
           [
             '',
             [
               'https://',
               { 'Ref': 'ApiGatewayRestApi' },
-              '.execute-api.${self:provider.region}.amazonaws.com/${self:provider.stage}/auth',
+              '.execute-api.${self:provider.region}.amazonaws.com/${self:custom.myStage}/auth',
             ],
           ],
       }
 
+
 provider:
   name: aws
   runtime: nodejs12.x
-  stage: dev
   region: eu-west-2
   profile: stravabot
   environment:
     SLACK_WEBHOOK: ${self:custom.myEnvironment.SLACK_WEBHOOK.${self:custom.myStage}}
-    AUTH_LINK: ${self:custom.myEnvironment.AUTH_LINK}
+    AUTH_LINK: ${self:custom.myEnvironment.AUTH_LINK.${self:custom.myStage}}
 
 functions:
   leaderboard:

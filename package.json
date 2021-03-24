@@ -7,7 +7,8 @@
     "lint": "eslint --quiet --ext .js src",
     "lint:fix": "yarn run lint --fix",
     "test": "serverless-bundle test",
-    "dev": "serverless offline start"
+    "dev": "serverless offline start --stage dev",
+    "deploy": "serverless deploy --stage prod"
   },
   "author": "",
   "license": "MIT",
