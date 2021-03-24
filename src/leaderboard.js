@@ -65,8 +65,10 @@ export const leaderboard = async () => {
       )
       const activities = await response.json()
 
+      const types = ['Run', 'VirtualRun']
       const distance = activities.reduce(
-        (acc, { type, distance }) => (type === 'Run' ? acc + distance : acc),
+        (acc, { type, distance }) =>
+          types.includes(type) ? acc + distance : acc,
         0
       )
       return {
