@@ -29,7 +29,7 @@
     "serverless-offline-ssm": "^5.0.2"
   },
   "dependencies": {
-    "aws-sdk": "^2.695.0",
+    "aws-sdk": "^2.814.0",
     "date-fns": "^2.14.0",
     "eslint-config-prettier": "^6.11.0",
     "node-fetch": "^2.6.1",
