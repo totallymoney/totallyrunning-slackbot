@@ -91,7 +91,14 @@ export const leaderboard = async () => {
     }
   })
 
-  const distances = (await Promise.all(athleteDistances)).filter(Boolean)
+  const athletesWithZeroDistance = []
+  const distances = (await Promise.all(athleteDistances)).filter((athlete) => {
+    const isDistanceGreaterThanZero = athlete?.totalDistance > 0
+    if (!isDistanceGreaterThanZero) {
+      athletesWithZeroDistance.push(athlete)
+    }
+    return isDistanceGreaterThanZero
+  })
   distances.sort((a, b) => b.totalDistance - a.totalDistance)
 
   const strings = distances.map(
@@ -104,7 +111,7 @@ export const leaderboard = async () => {
   const body = JSON.stringify({
     text: `Total distances run by TotallyRunning club members this week:\n${strings.join(
       '\n'
-    )}`,
+    )}\n${athletesWithZeroDistance.length} athletes on 0km.`,
   })
   try {
     await fetch(process.env.SLACK_WEBHOOK, {
