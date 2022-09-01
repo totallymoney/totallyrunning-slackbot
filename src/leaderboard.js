@@ -53,35 +53,45 @@ export const leaderboard = async () => {
       const params = {
         after: epoch,
       }
-      const response = await fetch(
-        `https://www.strava.com/api/v3/athlete/activities?${qs.stringify(
-          params
-        )}`,
-        {
-          headers: {
-            Authorization: `Bearer ${data.access_token}`,
-          },
-        }
-      )
-      const activities = await response.json()
+      if (data.access_token) {
+        const response = await fetch(
+          `https://www.strava.com/api/v3/athlete/activities?${qs.stringify(
+            params
+          )}`,
+          {
+            headers: {
+              Authorization: `Bearer ${data.access_token}`,
+            },
+          }
+        )
+        const activities = await response.json()
 
-      const types = ['Run', 'VirtualRun']
-      const distance = activities.reduce(
-        (acc, { type, distance }) =>
-          types.includes(type) ? acc + distance : acc,
-        0
-      )
-      return {
-        id: data.athleteId,
-        name: `${data.name.first} ${data.name.last}`,
-        totalDistance: distance,
+        const types = ['Run', 'VirtualRun']
+        if (!activities) {
+          console.log(data.name, activities)
+          return {}
+        } else {
+          const distance = activities.reduce(
+            (acc, { type, distance }) =>
+              types.includes(type) ? acc + distance : acc,
+            0
+          )
+          return {
+            id: data.athleteId,
+            name: `${data.name.first} ${data.name.last}`,
+            totalDistance: distance,
+          }
+        }
+      } else {
+        throw 'No access token'
       }
     } catch (err) {
       console.error('fetch activities error', err)
+      return null
     }
   })
 
-  const distances = await Promise.all(athleteDistances)
+  const distances = (await Promise.all(athleteDistances)).filter(Boolean)
   distances.sort((a, b) => b.totalDistance - a.totalDistance)
 
   const strings = distances.map(
